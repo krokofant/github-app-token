@@ -7,17 +7,19 @@ export const fetchInstallationToken = async ({
   githubApiUrl,
   installationId,
   owner,
-  permissions,
   privateKey,
   repo,
+  permissions,
+  repositories,
 }: Readonly<{
   appId: string;
   githubApiUrl: URL;
   installationId?: number;
   owner: string;
-  permissions?: Record<string, string>;
   privateKey: string;
   repo: string;
+  permissions?: Record<string, string>;
+  repositories?: Record<string, string>; 
 }>): Promise<string> => {
   const app = createAppAuth({
     appId,
@@ -51,6 +53,7 @@ export const fetchInstallationToken = async ({
       await octokit.rest.apps.createInstallationAccessToken({
         installation_id: installationId,
         permissions,
+        repositories,
       });
     return installation.token;
   } catch (error: unknown) {
