@@ -27,6 +27,9 @@ try {
   const repositoryInput = getInput("repository", { required: true });
   const [owner, repo] = repositoryInput.split("/");
 
+  const repositoriesInput = getInput("token_access_repositories");
+  const repositories = typeof repositories === 'string' && repositories.length > 0 ? repositories.trim().split(/\r?\n/) : undefined;
+
   const githubApiUrlInput = getInput("github_api_url", { required: true });
   const githubApiUrl = new URL(githubApiUrlInput);
 
@@ -38,6 +41,7 @@ try {
     permissions,
     privateKey,
     repo,
+    repositories,
   });
 
   setSecret(installationToken);
